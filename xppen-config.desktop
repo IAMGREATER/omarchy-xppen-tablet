@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=XP-Pen Settings
+Comment=Configure XP-Pen buttons, wheel scrolling, and display mapping
+Exec=xppen-config-gui
+Icon=input-tablet
+Terminal=false
+Type=Application
+Categories=Settings;HardwareSettings;
+StartupWMClass=org.omarchy.xppen-config

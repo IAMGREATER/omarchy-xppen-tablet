@@ -1,0 +1,37 @@
+#!/bin/bash
+set -e
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+BIN_DIR="$HOME/.local/bin"
+SYSTEMD_DIR="$HOME/.config/systemd/user"
+DESKTOP_DIR="$HOME/.local/share/applications"
+
+echo "=== Installing XP-Pen Tablet Control ==="
+
+mkdir -p "$BIN_DIR" "$SYSTEMD_DIR" "$DESKTOP_DIR" "$HOME/.config/xppen"
+
+# Copy binaries
+cp -f "$SCRIPT_DIR/bin/xppen-wheel-scroll" "$BIN_DIR/"
+cp -f "$SCRIPT_DIR/bin/xppen-config-gui" "$BIN_DIR/"
+chmod +x "$BIN_DIR/xppen-wheel-scroll" "$BIN_DIR/xppen-config-gui"
+
+# Install systemd service
+cp -f "$SCRIPT_DIR/systemd/xppen-wheel-scroll.service" "$SYSTEMD_DIR/"
+
+# Install desktop entry
+cp -f "$SCRIPT_DIR/xppen-config.desktop" "$DESKTOP_DIR/"
+
+# Reload and enable user systemd service
+systemctl --user daemon-reload
+systemctl --user enable --now xppen-wheel-scroll.service
+
+# Setup udev rule if root/sudo available
+if [ "$EUID" -eq 0 ]; then
+    cp -f "$SCRIPT_DIR/udev/99-xppen.rules" /etc/udev/rules.d/
+    udevadm control --reload-rules && udevadm trigger
+elif command -v sudo >/dev/null 2>&1 && sudo -n true 2>/dev/null; then
+    sudo cp -f "$SCRIPT_DIR/udev/99-xppen.rules" /etc/udev/rules.d/
+    sudo udevadm control --reload-rules && sudo udevadm trigger
+fi
+
+echo "Installation complete! XP-Pen Tablet Control service is running."

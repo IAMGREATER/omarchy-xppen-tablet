@@ -1,0 +1,16 @@
+#!/bin/bash
+set -e
+
+echo "=== Uninstalling XP-Pen Tablet Control ==="
+
+systemctl --user stop xppen-wheel-scroll.service 2>/dev/null || true
+systemctl --user disable xppen-wheel-scroll.service 2>/dev/null || true
+
+rm -f "$HOME/.config/systemd/user/xppen-wheel-scroll.service"
+rm -f "$HOME/.local/bin/xppen-wheel-scroll"
+rm -f "$HOME/.local/bin/xppen-config-gui"
+rm -f "$HOME/.local/share/applications/xppen-config.desktop"
+
+systemctl --user daemon-reload
+
+echo "Uninstallation complete."

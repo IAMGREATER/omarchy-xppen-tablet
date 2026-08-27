@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "omarchy-xppen-tablet",
+  "name": "XP-Pen Tablet Control",
+  "version": "1.0.0",
+  "author": "IAMGREATER",
+  "license": "MIT",
+  "description": "Native Wayland driver, wheel scrolling translator, button remapping, and display switcher for XP-Pen tablets on Omarchy.",
+  "homepage": "https://github.com/IAMGREATER/omarchy-xppen-tablet",
+  "kinds": [
+    "bar-widget",
+    "service"
+  ],
+  "entryPoints": {
+    "barWidget": "Panel.qml"
+  },
+  "barWidget": {
+    "displayName": "XP-Pen Tablet",
+    "description": "Quick status and settings for XP-Pen drawing tablets.",
+    "category": "Hardware",
+    "allowMultiple": false,
+    "defaultSection": "right"
+  }
+}

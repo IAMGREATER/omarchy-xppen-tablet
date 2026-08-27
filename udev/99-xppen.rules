@@ -1,0 +1,3 @@
+# Grant access to XP-Pen and uinput devices for members of the input group
+KERNEL=="uinput", MODE="0660", GROUP="input", OPTIONS+="static_node=uinput"
+SUBSYSTEM=="input", ATTRS{idVendor}=="28bd", MODE="0660", GROUP="input"
